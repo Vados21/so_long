@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_exit.c                                       :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 17:19:07 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:09 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/04/18 14:46:37 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/04/25 12:56:22 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "so_long.h"
-#include <stdlib.h>
-#include <stdio.h>
-
-void error_exit(const char *message)
- {
-    if (message)
-        fprintf(stderr, "Error\n%s\n", message);
-    exit(EXIT_FAILURE);
+int	ft_tolower(int c)
+{
+	if (!(c >= 65 && c <= 90))
+	{
+		return (c);
+	}
+	else
+	{
+		return (c + 32);
+	}
 }

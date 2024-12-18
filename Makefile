@@ -16,31 +16,61 @@ NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-# Путь к библиотеке MLX42
-MLX42_DIR = /home/vshpilev/Documents/so_long/MLX42
-MLX42_LIB = -L$(MLX42_DIR) -lmlx42 -lglfw
-MLX42_INC = -I$(MLX42_DIR)/include
+# Пути
+MLX_PATH = ./MLX42
+MLX_LIB = $(MLX_PATH)/build/libmlx42.a
+MLX_INC = $(MLX_PATH)/include
 
-# Исходные файлы и объектные файлы
-SRC = main.c init_game.c free_resources.c error_exit.c
-OBJ = $(SRC:.c=.o)
+GET_NEXT_PATH = ./get_next_line
+GET_NEXT_SRCS = $(GET_NEXT_PATH)/get_next_line.c $(GET_NEXT_PATH)/get_next_line_utils.c
+GET_NEXT_OBJS = $(GET_NEXT_SRCS:.c=.o)
 
-# Правило для сборки
-all: $(NAME)
+LIBFT_PATH = ./libft
+LIBFT_LIB = $(LIBFT_PATH)/libft.a
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(MLX42_LIB) $(MLX42_INC) -o $(NAME)
+# Исходные файлы
+SRCS = main.c \
+       logic/read_map.c \
+       logic/map_validation.c \
+       logic/errors.c \
+       logic/render_map.c \
+       logic/move_player.c \
+       logic/utils.c	\
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+
+# Заголовочные файлы
+INCLUDES = -I$(MLX_INC) -I$(LIBFT_PATH) -I$(GET_NEXT_PATH)
+
+# Объектные файлы
+OBJS = $(SRCS:.c=.o) $(GET_NEXT_OBJS)
+
+# Библиотеки
+LIBS = -L$(MLX_PATH) -lmlx42 -lglfw -ldl -pthread -lm $(LIBFT_LIB)
+
+# Основное правило
+all: $(LIBFT_LIB) $(NAME)
+
+# Сборка so_long
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+
+# Правило для компиляции object-файлов get_next_line
+$(GET_NEXT_OBJS): %.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+
+# Сборка libft
+$(LIBFT_LIB):
+	$(MAKE) -C $(LIBFT_PATH)
 
 # Очистка объектных файлов
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJS)
+	$(MAKE) clean -C $(LIBFT_PATH)
 
-# Полная очистка (включая исполняемый файл)
+# Полная очистка
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) fclean -C $(LIBFT_PATH)
 
 # Пересборка
 re: fclean all

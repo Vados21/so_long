@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 17:19:17 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:21 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/04/29 13:48:36 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/04/29 13:48:39 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "so_long.h"
+char	*ft_strrchr(const char *s, int c)
+{
+	char	*str_end;
 
-// void free_resources(t_game *game) {
-//     if (game->mlx)
-//         mlx_terminate(game->mlx); // Завершение работы MLX42
-// }
+	str_end = (char *)s + ft_strlen(s);
+	while (str_end > s && *str_end != (char)c)
+		str_end--;
+	if (*str_end == (char)c)
+		return (str_end);
+	return (NULL);
+}

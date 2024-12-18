@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 17:19:17 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:21 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/05/10 15:03:33 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/05/10 15:03:34 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "so_long.h"
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
 
-// void free_resources(t_game *game) {
-//     if (game->mlx)
-//         mlx_terminate(game->mlx); // Завершение работы MLX42
-// }
+	i = 0;
+	while (*(s + i))
+	{
+		write(fd, s + i, 1);
+		i++;
+	}
+}

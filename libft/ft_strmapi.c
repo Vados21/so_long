@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 17:19:17 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:21 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/05/10 14:54:14 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/05/10 14:54:16 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "so_long.h"
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char			*str;
+	unsigned int	i;
 
-// void free_resources(t_game *game) {
-//     if (game->mlx)
-//         mlx_terminate(game->mlx); // Завершение работы MLX42
-// }
+	if (!s)
+		return (NULL);
+	str = malloc(ft_strlen(s) + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (*(s + i))
+	{
+		*(str + i) = f(i, *(s + i));
+		i++;
+	}
+	*(str + i) = '\0';
+	return (str);
+}

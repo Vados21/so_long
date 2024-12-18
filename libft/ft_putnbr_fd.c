@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 17:19:17 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:21 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/05/10 15:07:22 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/05/10 15:07:24 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "so_long.h"
+void	ft_putnbr_fd(int n, int fd)
+{
+	unsigned int	nbr;
 
-// void free_resources(t_game *game) {
-//     if (game->mlx)
-//         mlx_terminate(game->mlx); // Завершение работы MLX42
-// }
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nbr = n * -1;
+	}
+	else
+		nbr = n;
+	if (nbr > 9)
+		ft_putnbr_fd(nbr / 10, fd);
+	ft_putchar_fd(nbr % 10 + '0', fd);
+}

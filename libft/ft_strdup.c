@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 17:19:17 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:21 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/05/06 16:21:53 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/05/06 16:21:56 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "so_long.h"
+char	*ft_strdup(const char *s1)
+{
+	char	*dst;
+	int		len;
+	int		i;
 
-// void free_resources(t_game *game) {
-//     if (game->mlx)
-//         mlx_terminate(game->mlx); // Завершение работы MLX42
-// }
+	len = 0;
+	i = 0;
+	while (s1[len] != '\0')
+		len++;
+	dst = (char *)malloc(sizeof(char) * (len + 1));
+	if (dst == NULL)
+		return (0);
+	while (i < len)
+	{
+		dst[i] = s1[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
