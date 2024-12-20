@@ -36,6 +36,7 @@ SRCS = main.c \
        logic/render_map.c \
        logic/move_player.c \
        logic/utils.c	\
+	   logic/free_memory.c \
 
 
 # Заголовочные файлы

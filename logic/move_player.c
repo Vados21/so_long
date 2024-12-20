@@ -25,15 +25,40 @@ static void check_and_move(t_game *game, int new_x, int new_y)
         mlx_image_to_window(game->mlx, game->floor, new_x * 64, new_y * 64); // Перерисовываем пол
     }
 
-    if (game->map[new_y][new_x] == 'E' && game->collectibles == 0) // Выход
-        error_exit("Congratulations! You won!");
+    if (game->map[new_y][new_x] == 'E') // Если игрок наступает на выход
+    {
+        if (game->collectibles == 0) // Все пиццы собраны
+        {
+            // Устанавливаем флаг победы
+            game->game_won = 1;
+
+            // Отображаем изображение победы
+            mlx_image_to_window(game->mlx, game->victory, 400, 300); // Центр окна
+            return;
+        }
+        else
+        {
+            return; // Выход остаётся видимым
+        }
+    }
+
+    // Перерисовываем текущую клетку пола перед перемещением игрока
+    mlx_image_to_window(game->mlx, game->floor, game->player_x * 64, game->player_y * 64);
 
     // Обновляем позицию игрока
-    game->player->instances[0].x = new_x * 64;
-    game->player->instances[0].y = new_y * 64;
     game->player_x = new_x;
     game->player_y = new_y;
+    mlx_image_to_window(game->mlx, game->player, new_x * 64, new_y * 64);
+
+    // Увеличиваем счётчик движений
+    game->moves++;
+    printf("Moves: %d\n", game->moves);
 }
+
+
+
+
+
 
 
 void move_player(t_game *game)

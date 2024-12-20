@@ -49,6 +49,7 @@ void load_textures(t_game *game)
     game->player = mlx_texture_to_image(game->mlx, mlx_load_png("textures/dog.png"));
     game->collectible = mlx_texture_to_image(game->mlx, mlx_load_png("textures/pizza.png"));
     game->exit = mlx_texture_to_image(game->mlx, mlx_load_png("textures/exit.png"));
+	game->victory = mlx_texture_to_image(game->mlx, mlx_load_png("textures/victory.png"));
 
     if (!game->wall || !game->floor || !game->player || !game->collectible || !game->exit)
         error_exit("Failed to load textures");

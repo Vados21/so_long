@@ -36,20 +36,22 @@ typedef struct s_game {
     mlx_image_t *player;
     mlx_image_t *collectible;
     mlx_image_t *exit;
+    mlx_image_t *victory; // Изображение победы
     char        **map;
     int          player_x;
     int          player_y;
     int          collectibles;
-    int          key_pressed; // Флаг для блокировки движения
+    int          moves;
+    int          key_pressed;
+    int          game_won; // Флаг победы
 } t_game;
 
 
 
 
+
+
 //map validation
-int validate_map_elements(char **map, int rows, int cols);
-int is_map_closed(char **map, int rows, int cols);
-void free_map(char **map, int rows);
 
 //read map
 char **read_map(const char *file_path);
@@ -60,6 +62,10 @@ void load_textures(t_game *game);
 void game_loop(void *param);
 int count_collectibles(char **map);
 void move_player(t_game *game);
+
+//free memory
+void free_map(char **map);
+void free_resources(t_game *game);
 
 
 #endif
