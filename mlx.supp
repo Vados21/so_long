@@ -1,5 +1,5 @@
 {
-   first
+   <insert_a_suppression_name_here>
    Memcheck:Addr8
    fun:strncmp
    fun:is_dst
@@ -17,6 +17,7 @@
    fun:_dl_catch_exception
    fun:dl_open_worker
 }
+
 
 {
    two
@@ -36,4 +37,3 @@
    fun:_dl_catch_exception
    fun:dl_open_worker
 }
-

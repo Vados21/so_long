@@ -11,9 +11,11 @@
 /* ************************************************************************** */
 #include "../so_long.h"
 
-void error_exit(const char *message)
+void	error_exit(t_game *game, const char *message)
 {
-    if (message)
-        fprintf(stderr, "Error\n%s\n", message);
-    exit(EXIT_FAILURE);
+	if (message)
+		printf("Error\n%s\n", message);
+	if (game)
+		free_resources(game);
+	exit(EXIT_FAILURE);
 }

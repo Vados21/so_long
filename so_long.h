@@ -52,11 +52,16 @@ typedef struct s_game {
 
 
 //map validation
+void validate_map(t_game *game, char **map);
+
+int is_rectangular(char **map);
+int is_surrounded_by_walls(char **map);
+void count_objects(char **map, int *player, int *exit, int *collectibles);
+ 
 
 //read map
 char **read_map(const char *file_path);
-void error_exit(const char *message);
-void validate_map(char **map);
+void error_exit(t_game *game, const char *message);  
 void render_map(t_game *game);
 void load_textures(t_game *game);
 void game_loop(void *param);

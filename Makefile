@@ -32,11 +32,13 @@ LIBFT_LIB = $(LIBFT_PATH)/libft.a
 SRCS = main.c \
        logic/read_map.c \
        logic/map_validation.c \
+	   logic/map_validation_2.c \
        logic/errors.c \
        logic/render_map.c \
        logic/move_player.c \
        logic/utils.c	\
 	   logic/free_memory.c \
+	   
 
 
 # Заголовочные файлы

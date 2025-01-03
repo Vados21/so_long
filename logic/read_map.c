@@ -36,7 +36,7 @@ static int count_lines(const char *file_path)
 
     fd = open(file_path, O_RDONLY);
     if (fd < 0)
-        error_exit("Error: Failed to open map file.");
+        error_exit(NULL, "Error: Failed to open map file.");
     while ((line = get_next_line(fd)))
     {
         count++;
@@ -55,25 +55,25 @@ char **read_map(const char *file_path)
 
     line_count = count_lines(file_path);
     if (line_count == 0)
-        error_exit("Error: Empty map file.");
+        error_exit(NULL, "Error: Empty map file.");
 
     map = (char **)malloc(sizeof(char *) * (line_count + 1));
     if (!map)
-        error_exit("Error: Memory allocation failed for map.");
+        error_exit(NULL, "Error: Memory allocation failed for map.");
 
     fd = open(file_path, O_RDONLY);
     if (fd < 0)
-        error_exit("Error: Failed to reopen map file.");
+        error_exit(NULL, "Error: Failed to reopen map file.");
 
     i = 0;
     while (i < line_count)
     {
         map[i] = remove_newline(get_next_line(fd));
         if (!map[i])
-            error_exit("Error: Failed to read line from map file.");
+            error_exit(NULL, "Error: Failed to read line from map file.");
         i++;
     }
-    map[i] = NULL; // Завершаем массив NULL
+    map[i] = NULL;
     close(fd);
     return (map);
 }

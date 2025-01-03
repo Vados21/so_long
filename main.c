@@ -47,45 +47,33 @@ int main(int argc, char **argv)
 {
     t_game game;
 
+    memset(&game, 0, sizeof(t_game)); // Обнуляем структуру
+
     if (argc != 2)
-        error_exit("Usage: ./so_long <map_file>");
+        error_exit(NULL, "Usage: ./so_long <map_file>");
 
-    // Инициализация структуры
-    game.mlx = NULL;
-    game.map = NULL;
-    game.wall = NULL;
-    game.floor = NULL;
-    game.player = NULL;
-    game.collectible = NULL;
-    game.exit = NULL;
-    game.victory = NULL;
-    game.collectibles = 0;
-    game.moves = 0;
-
-    // Инициализация MLX
     game.mlx = mlx_init(1600, 1200, "so_long", true);
     if (!game.mlx)
-        error_exit("Failed to initialize MLX");
+        error_exit(&game, "Failed to initialize MLX");
 
-    // Чтение карты
-    game.map = read_map(argv[1]);
-    validate_map(game.map);
+    game.map = read_map(argv[1]); // Читаем карту
+    validate_map(&game, game.map); // Проверяем и подсчитываем объекты
 
-    // Инициализация игры
-    game.collectibles = count_collectibles(game.map);
+    printf("Players: %d, Exits: %d, Collectibles: %d\n",
+           1, 1, game.collectibles); // Отладочная печать
+
     load_textures(&game);
     render_map(&game);
 
-    // Установка игрового цикла
     mlx_loop_hook(game.mlx, game_loop, &game);
-
-    // Запуск цикла MLX
     mlx_loop(game.mlx);
 
-    // Очистка ресурсов перед завершением программы
-    free_resources(&game);
-
+    free_resources(&game); // Освобождаем ресурсы
     return (0);
 }
+
+
+
+
 
 
