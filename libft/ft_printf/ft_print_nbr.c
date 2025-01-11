@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_print_nbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/18 17:07:50 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/12/18 17:07:52 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/06/03 15:31:39 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/06/03 15:31:41 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../so_long.h"
+#include "ft_printf.h"
 
-int	count_collectibles(char **map)
+int	ft_print_nbr(int n)
 {
-	int	y;
-	int	x;
-	int	count;
+	int		len;
+	char	*num;
 
-	y = 0;
-	x = 0;
-	count = 0;
-	while (map[y])
-	{
-		while (map[y][x])
-		{
-			if (map[y][x] == 'C')
-				count++;
-			x++;
-		}
-		y++;
-	}
-	return (count);
+	num = ft_itoa(n);
+	if (!num)
+		return (-1);
+	len = ft_print_str(num);
+	free(num);
+	return (len);
 }

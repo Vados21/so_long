@@ -5,18 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/26 17:31:33 by vshpilev          #+#    #+#              #
-#    Updated: 2024/11/26 17:31:35 by vshpilev         ###   ########.fr        #
+#    Created: 2025/01/11 14:07:37 by vshpilev          #+#    #+#              #
+#    Updated: 2025/01/11 14:07:41 by vshpilev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-# Имя исполняемого файла
+
 NAME = so_long
 
-# Компилятор и флаги
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-# Пути
 MLX_PATH = ./MLX42
 MLX_LIB = $(MLX_PATH)/build/libmlx42.a
 MLX_INC = $(MLX_PATH)/include
@@ -28,52 +26,44 @@ GET_NEXT_OBJS = $(GET_NEXT_SRCS:.c=.o)
 LIBFT_PATH = ./libft
 LIBFT_LIB = $(LIBFT_PATH)/libft.a
 
-# Исходные файлы
 SRCS = main.c \
        logic/read_map.c \
        logic/map_validation.c \
-	   logic/map_validation_2.c \
-       logic/errors.c \
+       logic/map_validation_2.c \
        logic/render_map.c \
        logic/move_player.c \
-       logic/utils.c	\
-	   logic/free_memory.c \
-	   
+       logic/utils.c \
+       logic/free_memory.c
 
-
-# Заголовочные файлы
 INCLUDES = -I$(MLX_INC) -I$(LIBFT_PATH) -I$(GET_NEXT_PATH)
 
-# Объектные файлы
-OBJS = $(SRCS:.c=.o) $(GET_NEXT_OBJS)
+OBJS = $(SRCS:.c=.o) $(GET_NEXT_OBJS) $(LIBFT_LIB)
 
-# Библиотеки
-LIBS = -L$(MLX_PATH) -lmlx42 -lglfw -ldl -pthread -lm $(LIBFT_LIB)
+LIBS = -L$(LIBFT_PATH) -lft -L$(PRINTF_PATH) -lftprintf -L$(MLX_PATH) -lmlx42 -lglfw -ldl -pthread -lm
 
-# Основное правило
-all: $(LIBFT_LIB) $(NAME)
+all: $(LIBFT_LIB) $(PRINTF_LIB) $(NAME)
 
-# Сборка so_long
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
-
-# Правило для компиляции object-файлов get_next_line
-$(GET_NEXT_OBJS): %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
-
-# Сборка libft
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_PATH)
 
-# Очистка объектных файлов
-clean:
-	rm -f $(OBJS)
-	$(MAKE) clean -C $(LIBFT_PATH)
+$(PRINTF_LIB):
+	$(MAKE) -C $(PRINTF_PATH)
 
-# Полная очистка
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+
+
+$(GET_NEXT_OBJS): %.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+
+clean:
+	rm -f $(OBJS) $(GET_NEXT_OBJS)
+	$(MAKE) clean -C $(LIBFT_PATH)
+	
 fclean: clean
 	rm -f $(NAME)
 	$(MAKE) fclean -C $(LIBFT_PATH)
 
-# Пересборка
 re: fclean all
+
+.PHONY: all clean fclean re

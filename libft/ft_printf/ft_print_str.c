@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_print_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/18 17:07:50 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/12/18 17:07:52 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/05/21 16:11:00 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/05/22 12:09:13 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../so_long.h"
+#include "ft_printf.h"
 
-int	count_collectibles(char **map)
+int	ft_print_str(char *str)
 {
-	int	y;
-	int	x;
-	int	count;
+	int	i;
 
-	y = 0;
-	x = 0;
-	count = 0;
-	while (map[y])
+	i = 0;
+	if (str == NULL)
 	{
-		while (map[y][x])
-		{
-			if (map[y][x] == 'C')
-				count++;
-			x++;
-		}
-		y++;
+		if (write(1, "(null)", 6) < 0)
+			return (-1);
+		return (6);
 	}
-	return (count);
+	while (str[i])
+	{
+		if (write(1, &str[i], 1) < 0)
+			return (-1);
+		i++;
+	}
+	return (i);
 }

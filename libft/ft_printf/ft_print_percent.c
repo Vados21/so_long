@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_print_percent.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vshpilev <vshpilev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/18 14:38:50 by vshpilev          #+#    #+#             */
-/*   Updated: 2024/12/18 14:38:53 by vshpilev         ###   ########.fr       */
+/*   Created: 2024/05/28 15:34:28 by vshpilev          #+#    #+#             */
+/*   Updated: 2024/05/28 15:34:36 by vshpilev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../so_long.h"
+#include "ft_printf.h"
 
-void	error_exit(t_game *game, const char *message)
+int	ft_print_percent(void)
 {
-	if (message)
-		printf("Error\n%s\n", message);
-	if (game)
-		free_resources(game);
-	exit(EXIT_FAILURE);
+	if (write(1, "%", 1) < 0)
+		return (-1);
+	return (1);
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../so_long.h"
 
-static	char	**copy_map(char **map)
+static char	**copy_map(char **map)
 {
 	int		i;
 	int		height;
@@ -28,22 +28,14 @@ static	char	**copy_map(char **map)
 	{
 		copy[i] = strdup(map[i]);
 		if (!copy[i])
+		{
+			free_map(copy);
 			error_exit(NULL, "Error: Memory allocation failed.");
+		}
 		i++;
 	}
 	copy[i] = NULL;
 	return (copy);
-}
-
-static void	flood_fill(char **map, int x, int y)
-{
-	if (map[y][x] == '1' || map[y][x] == 'X')
-		return ;
-	map[y][x] = 'X';
-	flood_fill(map, x + 1, y);
-	flood_fill(map, x - 1, y);
-	flood_fill(map, x, y + 1);
-	flood_fill(map, x, y - 1);
 }
 
 static int	are_all_objects_reachable(char **map, int start_x, int start_y)
@@ -97,7 +89,7 @@ static void	find_player(char **map, int *start_x, int *start_y)
 	error_exit(NULL, "Error: Player position not found.");
 }
 
-void	validate_map(t_game *game, char **map)
+void	validate_objects_and_path(t_game *game, char **map)
 {
 	int	player;
 	int	exit;
@@ -110,10 +102,6 @@ void	validate_map(t_game *game, char **map)
 	collectibles = 0;
 	start_x = 0;
 	start_y = 0;
-	if (!is_rectangular(map))
-		error_exit(game, "Error: The map is not rectangular.");
-	if (!is_surrounded_by_walls(map))
-		error_exit(game, "Error: The map is not surrounded by walls.");
 	count_objects(map, &player, &exit, &collectibles);
 	if (player != 1)
 		error_exit(game, "Error: There must be exactly one player (P).");
@@ -124,5 +112,15 @@ void	validate_map(t_game *game, char **map)
 	game->collectibles = collectibles;
 	find_player(map, &start_x, &start_y);
 	if (!are_all_objects_reachable(map, start_x, start_y))
-		error_exit(game, "Error: Not all coins and exits are reachable.");
+		error_exit(game, "Error: Not all bones and exits are reachable.");
+}
+
+void	validate_map(t_game *game, char **map)
+{
+	if (!is_rectangular(map))
+		error_exit(game, "Error: The map is not rectangular.");
+	if (!is_surrounded_by_walls(map))
+		error_exit(game, "Error: The map is not surrounded by walls.");
+	validate_unknown_symbols(game, map);
+	validate_objects_and_path(game, map);
 }
